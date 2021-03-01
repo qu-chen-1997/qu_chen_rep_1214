@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>代理</title>
+</head>
+<body>
+    <script type="text/javascript">
+    var user = {
+        name:"小明",
+        age:16
+    }
+    var Puser = new Proxy(user,{
+        get(target,attr){
+        console.log(target)
+        console.log(attr)
+        return target[attr]
+        },
+        set(target,attr,value){
+            // console.log(target)
+            // console.log(attr)
+            // console.log(value)
+            if(value > 0 && value < 150){
+                target[attr] = value 
+            }else{
+                console.warn("不能设置超出0~150范围的年龄")
+            }
+            
+        }
+    })
+    var age = Puser.age
+    </script>
+</body>
+</html>

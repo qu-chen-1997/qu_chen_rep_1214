@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>代理应用</title>
+</head>
+<body>
+    <div class="redBg" id="d1">
+        helloworld
+        你好
+    </div>
+
+    <script type="text/javascript">
+    // DOM.标签({属性：“属性值”}，子内容)
+    DOM.div({id:"d1",class:"redBg"},"helloworld","你好")
+    DOM.ul({id:"d1","data-index":"abc"})
+    DOM.img({src:"1.jpg"})
+    DOM.h1({class:"blueBg"},"hello")
+
+    //使用get()获取DOM.div()对象
+    let DOM = new Proxy({},{
+        get(target,attr){
+            var domObj = document.createElement(attr)
+            return function(attrs,...children){
+                for(key in attrs){
+                    domObj.setAttribute(key,attrs[key])
+                }
+                for(let i=0; i<children.length; i++){
+                    if(typeof(children[i] == 'string')){
+                        var textNode = document.createTextNode(children[i])
+                    }
+                    domObj.appendChild(textNode)
+                }
+                return domObj
+            }
+        }
+    })
+
+    var d1 = DOM.div({id:"d1",'class':"redBg"},"helloworld","你好")
+    document.body.appendChild(d1)
+    var ul = DOM.ul(
+        {id:"libiao",'class':"redBg"},
+        DOM.li({'class':'li'},"列表1"),
+        DOM.li({'class':'li'},"列表2"),
+        DOM.li({'class':'li'},"列表3"),
+        DOM.li({'class':'li'},"列表4")
+        )
+    document.body.appendChild(d2)
+    var img = DOM.img({src:"img/2.jpg"})
+    document.body.appendChild(img)
+    </script>
+</body>
+</html>

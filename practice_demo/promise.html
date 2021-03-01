@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>promise</title>
+</head>
+<body>
+    <script type="text/javascript">
+    //创建成功的promise对象
+    p1 = Promise.resolve("这是成功的promise对象")
+    console.log(p1)
+    p1.then(function(res){
+        console.log(res)
+    })
+    var p2 = new Promise(function(resolve,reject){
+        resolve("这是成功的promise对象")
+    })
+    console.log(p2)
+    p2.then(function(res){
+        console.log(res)
+    })
+    //创建失败的promise对象
+    p3 = Promise.reject("这是失败的promise对象")
+    console.log(p3)
+    p3.catch(function(err){
+        console.log(err)
+    })
+    var p4 = new Promise(function(resolve,reject){
+        reject("这是失败的promise对象")
+    })
+    console.log(p4)
+    p4.catch(function(err){
+        console.log(err)
+    })
+    //同时请求多个数据
+    //同时请求多个数据，只要有其中一个返回就立即处理
+    var p1 = Promise.resolve(function(){
+        setTime(function(){
+            resolve("450毫秒后执行")
+        },450)
+    })
+    var p2 = Promise.resolve(function(){
+        setTime(function(){
+            resolve("300毫秒后执行")
+        },300)
+    })
+    var p3 = Promise.resolve(function(){
+        setTime(function(){
+            resolve("400毫秒后执行")
+        },400)
+    })
+    var p4 = Promise.resolve(function(){
+        setTime(function(){
+            resolve("500毫秒后执行")
+        },500)
+    })
+    var arr = [p1, p2, p3, p4]
+    var result = Promise.race(arr)
+    result.then(function(res){
+        console.log(res)
+    })
+    </script>
+</body>
+</html>

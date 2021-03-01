@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>async & ajax</title>
+    <script src="https://s3.pstatp.com/cdn/expire-1-M/jquery/3.1.1/jquery.min.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+    function getAjax(url){
+        return new Promise(function(resolve,reject){
+        //创建ajax对象
+        var xhr = new XMLHttpRequest()
+        //设置路径
+        var httpUrl = url
+        xhr.open('GET',httpUrl)
+        //监听
+        xhr.onreadystatechange = function(){
+            if(xhr.status == 200 && xhr.readyState == 4 ){
+                //处理获得的数据
+                result = JSON.parse(xhr.response)
+                resolve(result)
+
+            }else if(xhr.readyState == 4 && xhr.status != 200){
+                //处理失败结果
+                reject(xhr)
+            }
+        }
+        //发送
+        xhr.send()
+        })
+    }
+
+    async function test(){
+            var httpUrl = "https://api.apiopen.top/getJoke?page=1&count=2&type=video"
+            var res = await getAjax(httpUrl)
+            console.log(res)
+    }
+    test()
+
+    async function getMusic(){
+            var rankListUrl = "https://api.apiopen.top/musicRankings"
+            var rankListRes = await getAjax(rankListUrl)
+            console.log(rankListRes)
+            for(let i=0; i<rankListRes.result.length; i++){
+                let rankName = rankListRes.result[i].name
+                $('body').append(`<h2>${rankName}</h2>`)
+                let content = rankListRes.result[i].content
+                for(let k=0; k<content.length; k++){
+                    console.log(k)
+
+                    //写法一：
+                    let musicDetail = await getAjax("https://api.apiopen.top/musicDetails?id="+content['song_id'])
+                    console.log(musicDetail)
+                    //渲染操作
+
+                    //写法二
+                    //使用promise
+                    let httpUrl = "https://api.apiopen.top/musicDetails?id="
+                    getAjax(httpUrl).then(function(musicDetail){
+                        console.log(musicDetail)
+                        //渲染操作
+                    })
+
+                    //写法三
+                    let fn = async function (){
+                        let httpUrl = "https://api.apiopen.top/musicDetails?id="
+                        var musicDetail = await getAjax(httpUrl)
+                        //渲染操作
+                        console.log(musicDetail)
+                        $('body').append(`<h4>${rankName}:音乐${content[k]['song_id']}</h4>`)
+                    }
+                    fn()
+                }
+            }
+    }
+    getMusic()
+    </script>
+</body>
+</html>

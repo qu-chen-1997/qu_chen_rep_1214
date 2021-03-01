@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生成器</title>
+</head>
+<body>
+    <script>
+        //定义生成器：在函数前面加*；
+        //生成器：一个可以中断的函数，且每次中断后输出yield其后所紧跟的值（以空间换时间）
+        //yield只能在生成器内使用
+        function *easy(){
+            yield 1
+            yield 2
+            yield 3
+        }
+
+        // let easyAterator = easy()
+        // console.log(easyAterator)
+
+        // for(let i of easyAterator){
+        //     console.log(i)
+        // }
+
+
+
+        function *difficult(count){
+            var num = 0
+            var pre1 = 0
+            var pre2 = 0
+            if(num == 0){
+                pre1 = 1;
+                num++;
+                yield 0
+            }               
+            while(true){
+                num++
+                let result = pre1 + pre2;
+                pre2 = pre1;
+                pre1 = result;
+                yield result
+                if(num >= count){
+                   break;
+                }
+            } 
+        }
+
+        // var diffAterator1 = difficult(3)
+        // console.log(diffAterator1)
+
+        var diffAterator2 = difficult(5)
+        console.log(diffAterator2)
+        for(let i of diffAterator2){
+            console.log(i)
+        }
+    </script>
+</body>
+</html>

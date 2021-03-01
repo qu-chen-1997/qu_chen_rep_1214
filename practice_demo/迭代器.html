@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>迭代器</title>
+</head>
+<body>
+    <script type="text/javascript">
+    //迭代器作用：将规律性的东西封装成函数，通过调用函数获取数组元素，提升性能
+
+
+    //var srr = [0,1,1,2,3,5,8,13,21]
+    function createIterator(count){
+        //count为指定迭代器生成的个数，num为当前遍历的值
+        var num = 0
+        return {
+            pre1:0,
+            pre2:0,
+            next:function(){
+                console.log(num)
+                if(num > count){
+                    return {
+                        done:true,
+                        value:undefined
+                    }
+                }
+                if(num == 0){
+                    this.pre1 = 1;
+                    num++;
+                    return {
+                    //done代表事情是否完成
+                    done:false,
+                    value:0
+                    }
+                }else{
+                    num++
+                    result = this.pre1 + this.pre2;
+                    this.pre2 = this.pre1;
+                    this.pre1 = result;
+                    return {
+                        done:false,
+                        value:result
+                    }
+                }
+            }
+        }
+    }
+
+    var user = new Map()
+    user.set("username","小明")
+    user.set("password","1234")
+    user.set("age","18")
+    console.log(user)
+
+    var userIterator = user.entries()
+    console.log(userIterator.next())
+    for (let s of userIterator){
+        console.log(s)
+    }
+
+    var a = createIterator()
+    </script>
+</body>
+</html>

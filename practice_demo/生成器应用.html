@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生成器应用</title>
+</head>
+<body>
+    <script type="text/javascript">
+    
+    function *priceGenerator(){
+        var priceAll =[100,99,66,77,88,44,90]
+        for(let i=0; i<priceALL.length; i++){
+            let result = "$"+priceAll[i]
+            yield result;
+        }
+    }
+    //调用生成器得到的对象即为迭代器
+    var priceAerator = priceGenerator(priceAll)
+    for(let i=0; i<4; i++){
+        let result = priceAerator.next()
+        $('body').append(`<h1>${result.value}</h1>`)
+    }
+    </script>
+</body>
+</html>

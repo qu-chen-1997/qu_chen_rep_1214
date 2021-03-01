@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>async & await</title>
+    <style>
+        #d1{
+            width:300px;
+            height:300px;
+            background:skyblue;
+        }
+    </style>
+</head>
+<body>
+    <div id="d1">
+
+    </div>
+    <script type="text/javascript">
+    //js中任务类型：同步任务、异步任务
+    
+    //什么是同步操作？
+    //等待，依次执行主线程任务
+
+    //什么是异步操作？
+    //不等待，即将任务放入异步队列，在主线程执行任务结束之后再去执行
+
+    //同步操作和异步操作的对比：
+    //同步可以保证顺序一致，但是容易导致阻塞；
+    //异步可以解决阻塞问题，但是会改变顺序性，应该根据不同的需要去写代码。
+
+    //为什么需要异步操作？
+    //javascript是单线程，一次只能执行一个任务，要想任务能够顺利进行，
+    //则需要排队，然而代码自上而下执行时，若某些代码解析时间过长，
+    //则可能会造成阻塞，形成“卡死”的状况，影响用户体验
+    //(所谓单线程，是指在JS引擎中负责解释和执行JavaScript代码的线程只有一个)
+
+    //js如何实现异步？
+    //通过事件循环实现异步
+
+    //异步流程工具：Promise函数； Generator 函数；async函数
+    //异步操作过程中使用回调，造成回调地狱=>使用async解决异步回调问题，配合使用await，同步流程表达异步操作
+
+    //promise函数：？
+    //Generator函数：？
+    //async函数：？
+    //async特点？
+    //返回值一般为promise对象，可以用then方法进行下一步操作；
+    //遇到await则等待，当前异步操作执行完后就往下执行；
+    //与await搭配使用时，async可以取代生成器函数的星号，await可以取代yield，不需要调用next()方法
+
+    //AJAX是什么？
+    //AJAX指的是异步的JavaScript和XML（Asynchronous JavaScript And XML），是一种技术方案
+   
+
+    //AJAX作用？
+    //使用XMLHttpRequest 对象与服务器通信，使用JSON，XML，HTML和text文本等格式发送和接收数据。
+
+    //AJAX优点：
+    //在不重新加载页面的情况下发送请求给服务器；接受并使用从服务器发来的数据。
+
+
+
+
+
+
+
+
+
+
+    //异步操作
+    var fnPromise1 = function(){
+        return new Promise(function(resolve,reject){
+            setTimeout(function(){
+                var d1 = document.querySelector("#d1");
+                d1.style.backgroundColor = "purple"
+                resolve("1秒之后改变了d1的颜色")
+            },1000)
+        })
+    }
+
+    var fnPromise2 = function(){
+        return new Promise(function(resolve,reject){
+            setTimeout(function(){
+                var d1 = document.querySelector("#d1");
+                d1.style.backgroundColor = "orange"
+                resolve("2秒之后改变了d1的颜色")
+            },2000)
+        })
+    }
+
+    var fnPromise3 = function(){
+        return new Promise(function(resolve,reject){
+            reject("失败了")
+        })
+    }
+    
+    //使用回调
+    // var p1 = fnPromise1()
+    // p1.then(function(res){
+    //     console.log(res)
+    // })
+
+    //不使用回调(执行顺序类似于同步操作，由上至下)
+    async function demo(){
+        try{
+            var result1 = await fnPromise1()
+            console.log(result1)
+            var result2 = await fnPromise2()
+            console.log(result2)
+            var result3 = await fnPromise3()
+            console.log(result3)
+        }catch(e){
+            console.log(e)
+        }
+    }
+    demo()
+    console.log("123456")
+    </script>
+</body>
+</html>

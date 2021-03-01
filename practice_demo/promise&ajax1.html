@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>promise&ajax1</title>
+</head>
+<body>
+    <script type="text/javascript">
+        //直接使用ajax时（使用Promise的原因）
+        getAjax('moviesAll',function(){
+        //获取所有电影
+            getAjax('moviesClass',function(){
+            //获取电影分类
+                getAjax('moviesName',function(){
+                    //获取电影名称
+                    getAjax('moviescomment',function(){
+                        //获取电影评论
+                    })
+                })
+            })
+        })
+        var p1 = $.get("url")
+        p1.then(function(){})
+
+
+
+        var p2 = new Promise(function(resolve,reject){
+            if(true){
+                resolve("数据请求成功")
+            }else{
+                reject("数据请求失败")
+            }
+        })
+        console.log(p2)
+        p2.then(function(res){
+            console.log(res)
+        },function(err){
+            console.log(err)
+        });
+        p2.catch(function(err){
+            console.log(err)
+        })
+        p2.finall(function(res){
+            console.log(res)
+        })
+
+
+        var p3 = new Promise(function(resolve,reject){
+            if(false){
+                resolve("数据请求成功")
+            }else{
+                reject("数据请求失败")
+            }
+        })
+        console.log(p3)
+        p3.then(function(res){
+            console.log(res)
+        },function(err){
+            console.log(err)
+        });
+        p3.catch(function(err){
+            console.log(err)
+        })
+        p3.finall(function(res){
+            console.log(res)
+        })
+
+
+
+
+
+
+    </script>
+</body>
+</html>

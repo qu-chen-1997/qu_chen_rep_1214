@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise应用</title>
+</head>
+<body>
+    <script type="text/javascript">
+        class LcPromise extends Promise{
+            success(resolve,reject){
+                    this.then(resolve,reject)
+            }
+            fail(reject){
+                this.catch(reject)
+            }
+        }
+        var p1 = new LcPromise(function(resolve,reject){
+            if(false){
+                console.log("成功返回内容")
+            }else{
+                console.log("请求失败")
+            }
+        })
+        p1.success(function(res){
+            console.log(res)
+        })
+        p1.fail(function(res){
+            console.log(res)
+        })
+    </script>
+</body>
+</html>

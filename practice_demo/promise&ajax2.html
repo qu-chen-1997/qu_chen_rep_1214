@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise & ajax2</title>
+</head>
+<body>
+    <script type="text/javascript">
+
+    var httpUrl = "https://api.apiopen.top/getJoke?page=1&count=2&type=video"
+    var ajaxp =  getAjax(httpUrl)
+    function getAjax(url){
+        return new Promise(function(resolve,reject){
+        //创建ajax对象
+        var xhr = new XMLHttpRequest()
+        //设置路径
+        var httpUrl = url
+        xhr.open('GET',httpUrl)
+        //监听
+        xhr.onreadystatechange = function(){
+            if(xhr.status == 200 && xhr.readyState == 4 ){
+                //处理获得的数据
+                resolve(xhr)
+
+            }else if(xhr.readyState == 4 && xhr.status != 200){
+                //处理失败结果
+                reject(xhr)
+            }
+        }
+        //发送
+        xhr.send()
+        })
+    }
+    console.log(ajaxp)
+    // ajaxp.then(function(res){
+    //     var result = JSON.parse(res.response)
+    //     console.log(res)
+    //     console.log(result)
+    // }).catch(function(err){
+    //     console.log(err)
+    // })
+
+    //fetch是原生封装好的ajax，返回promise对象
+    fetch(httpUrl).then(function(res){
+        console.log(res)
+        var result = res.json()
+        result.then(function(result){
+            console.log(result)
+        })
+    })
+
+
+
+
+
+    </script>
+</body>
+</html>

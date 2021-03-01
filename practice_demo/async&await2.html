@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>async & await</title>
+</head>
+<body>
+    <script type="text/javascript">
+            //使用浏览器自带已经封装好的Ajax：fetch
+            // var httpUrl = "https://free-api.heweather.net/s6/weather/now?location=广州&key=3c497450d8e44c5280421ceaba1db581"
+            // fetch(httpUrl).then(function(res){
+            //     return res.json()
+            // }).then(function(res){
+            //     console.log(res)
+            // })
+            
+            //使用async和await
+            async function req(){
+                var httpUrl = "https://free-api.heweather.net/s6/weather/now?location=广州&key=3c497450d8e44c5280421ceaba1db581"
+                let res = await fetch(httpUrl)
+                let jsonObj = await res.json()
+                console.log(jsonObj) 
+            }
+            req()
+    </script>
+</body>
+</html>
